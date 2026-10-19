@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aircraft Defect Detection</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f5fa;
+            color: #172b4d;
+        }
+
+        header {
+            background: #102744;
+            color: white;
+            padding: 24px 8%;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 26px;
+        }
+
+        header p {
+            margin: 0;
+            color: #c8d7eb;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 5px 22px #152b4610;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .upload-box {
+            margin: 24px 0;
+            padding: 35px 20px;
+            text-align: center;
+            border: 2px dashed #9aacc5;
+            border-radius: 12px;
+            background: #f8faff;
+        }
+
+        input[type="file"] {
+            max-width: 100%;
+            margin: 15px 0;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #1769e0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1053b5;
+        }
+
+        .note {
+            color: #66758a;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #66758a;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                margin: 25px auto;
+            }
+
+            .panel {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Aircraft Surface Inspection</h1>
+        <p>YOLO-based Aircraft Defect Detection System</p>
+    </header>
+
+    <main>
+        <section class="panel">
+            <h2>Inspect an Aircraft Image</h2>
+
+            <p>
+                Upload an aircraft surface image to identify
+                possible cracks, dents, missing-head defects,
+                paint loss and scratches.
+            </p>
+
+            <form action="/detect" method="POST"
+                  enctype="multipart/form-data">
+
+                <div class="upload-box">
+                    <p><strong>Select an aircraft image</strong></p>
+                    <input
+                        type="file"
+                        name="image"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        required
+                    >
+                    <p class="note">
+                        Supported formats: JPG, PNG and WEBP
+                    </p>
+                </div>
+
+                <button type="submit">Detect Defects</button>
+            </form>
+
+            <p class="note">
+                Research prototype only. Results require human
+                review and are not a substitute for certified
+                aircraft safety inspections.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        Aircraft Surface Defect Detection | Research Project
+    </footer>
+</body>
+</html>
