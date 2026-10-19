@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspection Results | AeroInspect</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #102238;
+            --blue: #2563eb;
+            --bg: #f3f6fb;
+            --text: #172b43;
+            --muted: #708096;
+            --border: #e3e9f1;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        header {
+            background: var(--navy);
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: 750;
+            letter-spacing: 0.3px;
+        }
+
+        .brand span {
+            color: #73a7ff;
+        }
+
+        .header-note {
+            color: #c4d1e2;
+            font-size: 13px;
+        }
+
+        main {
+            max-width: 1180px;
+            margin: 34px auto;
+            padding: 0 22px;
+        }
+
+        .page-heading {
+            margin-bottom: 24px;
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            font-size: 11px;
+        }
+
+        h1 {
+            font-size: clamp(26px, 4vw, 34px);
+            margin: 8px 0;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .summary-card,
+        .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(22, 43, 70, 0.035);
+        }
+
+        .summary-card {
+            padding: 21px;
+        }
+
+        .summary-label {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .summary-number {
+            font-size: 31px;
+            font-weight: 750;
+            margin-top: 10px;
+        }
+
+        .summary-detail {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .panel {
+            padding: 24px;
+            margin-bottom: 22px;
+            min-width: 0;
+        }
+
+        .panel-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .pill {
+            display: inline-block;
+            background: #eaf1ff;
+            color: #2457a7;
+            border-radius: 30px;
+            padding: 7px 11px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .result-image {
+            display: block;
+            width: 100%;
+            max-height: 620px;
+            object-fit: contain;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+        }
+
+        .image-note {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+            margin: 14px 0 0;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .class-card {
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fbfcfe;
+        }
+
+        .class-name {
+            color: var(--muted);
+            font-size: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .class-count {
+            font-size: 23px;
+            font-weight: 750;
+            margin-top: 6px;
+        }
+
+        .detection-list {
+            border-top: 1px solid var(--border);
+        }
+
+        .detection {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detection-name {
+            font-size: 14px;
+            font-weight: 650;
+            overflow-wrap: anywhere;
+        }
+
+        .confidence {
+            color: #176a48;
+            background: #e7f7ef;
+            border-radius: 7px;
+            padding: 7px 9px;
+            font-size: 12px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+
+        .empty {
+            padding: 17px;
+            border-radius: 10px;
+            background: #fff7e6;
+            color: #805a16;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 11px;
+            margin: 22px 0;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 13px 18px;
+            border-radius: 9px;
+            background: var(--blue);
+            color: white;
+            text-decoration: none;
+            font-weight: 650;
+            font-size: 14px;
+            border: 1px solid var(--blue);
+            cursor: pointer;
+        }
+
+        .button.secondary {
+            color: var(--text);
+            background: white;
+            border-color: var(--border);
+        }
+
+        .button:hover {
+            opacity: 0.88;
+        }
+
+        .disclaimer {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+            padding: 17px 0 8px;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            padding: 25px 15px;
+        }
+
+        @media (max-width: 760px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                padding: 17px;
+            }
+
+            .summary-number {
+                font-size: 27px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="brand">AERO<span>INSPECT</span></div>
+        <div class="header-note">
+            YOLO-Based Surface Inspection Prototype
+        </div>
+    </header>
+
+    <main>
+        <section class="page-heading">
+            <div class="eyebrow">Inspection report</div>
+            <h1>Detection Results</h1>
+            <p class="subtitle">
+                Review predicted aircraft surface defects and their
+                confidence scores below.
+            </p>
+        </section>
+
+        <section class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-label">Total detections</div>
+                <div class="summary-number">{{ detections|length }}</div>
+                <div class="summary-detail">Predicted defect instances</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-label">Defect classes found</div>
+                <div class="summary-number">
+                    {{ detections|map(attribute='name')|unique|list|length }}
+                </div>
+                <div class="summary-detail">Unique predicted categories</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-label">Mean confidence</div>
+                <div class="summary-number">
+                    {% if detections %}
+                        {{ ((detections|sum(attribute='confidence')) / (detections|length))|round(1) }}%
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </div>
+                <div class="summary-detail">Average model confidence</div>
+            </div>
+        </section>
+
+        <section class="content-grid">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>Annotated Image</h2>
+                    <span class="pill">YOLO output</span>
+                </div>
+
+                <img
+                    class="result-image"
+                    src="data:image/jpeg;base64,{{ image_data }}"
+                    alt="Aircraft image annotated with predicted defect boxes"
+                >
+
+                <p class="image-note">
+                    The boxes represent model predictions. Review them
+                    against the original image before drawing conclusions.
+                </p>
+            </div>
+
+            <div>
+                <section class="panel">
+                    <div class="panel-heading">
+                        <h2>Defect Summary</h2>
+                    </div>
+
+                    {% set classes = [
+                        'crack',
+                        'dent',
+                        'missing-head',
+                        'paint-off',
+                        'scratch'
+                    ] %}
+
+                    <div class="class-grid">
+                        {% for class_name in classes %}
+                            <div class="class-card">
+                                <div class="class-name">
+                                    {{ class_name|replace('-', ' ')|title }}
+                                </div>
+                                <div class="class-count">
+                                    {{ detections|selectattr('name', 'equalto', class_name)|list|length }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="panel-heading">
+                        <h2>Individual Predictions</h2>
+                    </div>
+
+                    {% if detections %}
+                        <div class="detection-list">
+                            {% for item in detections %}
+                                <div class="detection">
+                                    <div class="detection-name">
+                                        {{ item.name|replace('-', ' ')|title }}
+                                    </div>
+                                    <div class="confidence">
+                                        {{ item.confidence }}%
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="empty">
+                            No defects were detected at the current settings.
+                            This does not establish that the surface is defect-free.
+                        </div>
+                    {% endif %}
+                </section>
+            </div>
+        </section>
+
+        <div class="actions">
+            <a class="button" href="/">Inspect Another Image</a>
+
+            <a
+                class="button secondary"
+                href="data:image/jpeg;base64,{{ image_data }}"
+                download="aircraft_detection_result.jpg"
+            >
+                Download Annotated Image
+            </a>
+
+            <a
+                class="button secondary"
+                href="data:text/csv;base64,{{ report_data }}"
+                download="aircraft_inspection_report.csv"
+            >
+                Download CSV Report
+            </a>
+        </div>
+
+        <p class="disclaimer">
+            Research prototype only. Confidence scores are not
