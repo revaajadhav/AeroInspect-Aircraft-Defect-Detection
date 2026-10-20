@@ -55,6 +55,40 @@ The model is configured to detect five defect categories:
 
 5. Upload an image to view the detection results.
 
+
+## Model Evaluation Results
+
+The YOLO11n baseline and paint-scratch model were evaluated to assess aircraft surface defect detection performance.
+
+### 1. Class-Wise mAP@50
+
+The paint-scratch model showed improved class-wise mAP@50 across all five defect categories on the Aircraft_Skin_Defects_v1 test set.
+
+![Class-wise mAP@50 comparison](classwise_map50.png)
+
+### 2. Confidence Threshold Analysis
+
+Confidence thresholds of 0.25, 0.35, and 0.45 were compared. On the reported evaluation set, a threshold of 0.25 achieved the highest recall and mAP@50 among the three tested thresholds.
+
+![Confidence threshold comparison](confidence_thresholds.png)
+
+### 3. Final Test Comparison
+
+On the separate test set of 563 images, the results were:
+
+| Metric | Baseline | Paint-Scratch Model |
+|---|---:|---:|
+| Precision | 0.5791 | 0.6205 |
+| Recall | 0.3535 | 0.3496 |
+| mAP@50 | 0.3523 | 0.3566 |
+| mAP@50–95 | 0.1825 | 0.1819 |
+
+![Final test comparison](final_test_comparison.png)
+
+The paint-scratch model achieved slightly higher precision and mAP@50, while recall and mAP@50–95 were marginally lower. These results indicate a modest improvement rather than a consistent gain across all metrics.
+
+**Note:** The 51-image Aircraft_Skin_Defects_v1 evaluation and the separate 563-image test evaluation are different evaluation sets; their results should be reported separately.
+
 ## Project Status
 The Flask-based prototype is implemented, and the image detection and report-download workflow has been tested.
 
